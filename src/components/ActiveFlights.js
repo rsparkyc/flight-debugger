@@ -93,6 +93,8 @@ const ActiveFlights = () => {
               style={{ backgroundColor: getColorForAge(getMessageAge(flight.stamp)) }}
             >
               <div className="age">Age: {getMessageAge(flight.stamp)} seconds</div>
+              <div className="debugs">{flight.debugs > 0 ? <> {flight.debugs} debugs logged </> : ""}</div>
+              <p className="flightRules">{flight.flight_rules}</p>
               {flight.tail_number ? <h2>{flight.tail_number}</h2> : <h2 className="alert">No tail number</h2>}
               {flight.displayname ? <p>Name: {flight.displayname}</p> : <p className="alert">No display name</p>}
               <p>Flight ID: {flight.flight_id}</p>
