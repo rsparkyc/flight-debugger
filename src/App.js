@@ -10,8 +10,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ActiveFlights />} />
-        <Route path="/flight-history/:flightId" element={<FlightHistory />} />
+        <Route path="/flight-debugger/" element={<ActiveFlights />} />
+        <Route path="/flight-debugger/flight-history/:flightId" element={<FlightHistory />} />
       </Routes>
     </BrowserRouter>
   );

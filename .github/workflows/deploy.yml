@@ -1,0 +1,15 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call SI Deploy Endpoint
+        run: |
+          curl 'https://www.sayintentions.ai/portal/admin/ryan/deploy.html' 
