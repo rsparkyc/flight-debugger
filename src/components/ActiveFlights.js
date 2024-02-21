@@ -98,6 +98,29 @@ const ActiveFlights = () => {
               {flight.tail_number ? <h2>{flight.tail_number}</h2> : <h2 className="alert">No tail number</h2>}
               {flight.displayname ? <p>Name: {flight.displayname}</p> : <p className="alert">No display name</p>}
               <p>Flight ID: {flight.flight_id}</p>
+              <a
+                href={`https://www.sayintentions.ai/portal/flights/flight.html?flight_id=${flight.flight_id}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Flight Map
+              </a>
+              <br />
+              <a
+                href={`https://www.sayintentions.ai/portal/flights/history.html?flight_id=${flight.flight_id}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Flight Transcript
+              </a>
+              <br />
+              <a
+                href={`https://www.sayintentions.ai/tracker?flightId=${flight.flight_id}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View on Tracker
+              </a>
               <p>
                 Airspeed: {flight.airspeed} Altitude: {flight.altitude}
               </p>
