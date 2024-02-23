@@ -32,6 +32,18 @@
   color: red;
 }
 
+.xpdrVfr {
+  color: blue;
+}
+
+.xpdrMatch {
+  color: green;
+}
+
+.xpdrNoMatch {
+  color: red;
+}
+
 @media (max-width: 600px) {
   .flight-tile {
     width: 100%;

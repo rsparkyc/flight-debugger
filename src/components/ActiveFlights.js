@@ -73,6 +73,16 @@ const ActiveFlights = () => {
     }
   };
 
+  const calculateXpdrColor = (flight) => {
+    if (flight.clearance_xpdr && flight.clearance_xpdr !== 0 && flight.latest_xpdr === flight.clearance_xpdr) {
+      return "xpdrMatch";
+    }
+    if ((flight.latest_xpdr === 7000 || flight.latest_xpdr === 1200) && flight.latest_xpdr_setting === "Alt") {
+      return "xpdrVfr";
+    }
+    return "xpdrNoMatch";
+  };
+
   return (
     <div>
       <input
@@ -84,49 +94,75 @@ const ActiveFlights = () => {
       />
 
       <div className="active-flights-container">
-        {filteredFlights
-          .sort((flightA, flightB) => flightA.id - flightB.id)
-          .map((flight) => (
-            <div
-              key={flight.id}
-              className="flight-tile"
-              style={{ backgroundColor: getColorForAge(getMessageAge(flight.stamp)) }}
-            >
-              <div className="age">Age: {getMessageAge(flight.stamp)} seconds</div>
-              <div className="debugs">{flight.debugs > 0 ? <> {flight.debugs} debugs logged </> : ""}</div>
-              <p className="flightRules">{flight.flight_rules}</p>
-              {flight.tail_number ? <h2>{flight.tail_number}</h2> : <h2 className="alert">No tail number</h2>}
-              {flight.displayname ? <p>Name: {flight.displayname}</p> : <p className="alert">No display name</p>}
-              <p>Flight ID: {flight.flight_id}</p>
-              <a
-                href={`https://www.sayintentions.ai/portal/flights/flight.html?flight_id=${flight.flight_id}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Flight Map
-              </a>
+        {filteredFlights.map((flight) => (
+          <div
+            key={flight.flight_id}
+            className="flight-tile"
+            style={{ backgroundColor: getColorForAge(getMessageAge(flight.stamp)) }}
+          >
+            <div className="age">Age: {getMessageAge(flight.stamp)} seconds</div>
+            <div className="debugs">{flight.debugs > 0 ? <> {flight.debugs} debugs logged </> : ""}</div>
+            <p className="flightRules">{flight.flight_rules}</p>
+            {flight.tail_number ? <h2>{flight.tail_number}</h2> : <h2 className="alert">No tail number</h2>}
+            <p>
+              <span className={calculateXpdrColor(flight)}>
+                XPDR: {flight.latest_xpdr ? String(flight.latest_xpdr).padStart(4, "0") : "----"} (
+                {flight.latest_xpdr_setting ? flight.latest_xpdr_setting : "---"})
+              </span>
+              {flight.latest_xpdr && flight.latest_xpdr !== 0 ? (
+                <>
+                  <br />
+                  <span>
+                    {flight.clearance_xpdr && flight.clearance_xpdr !== 0 ? (
+                      <span className={flight.clearance_xpdr === flight.latest_xpdr ? "xpdrMatch" : "xpdrNoMatch"}>
+                        Given: {flight.clearance_xpdr}
+                      </span>
+                    ) : null}
+                  </span>
+                </>
+              ) : null}
+            </p>
+
+            <div className="names">
+              {flight.displayname && flight.displayname !== "none" ? (
+                <span>Name: {flight.displayname}</span>
+              ) : (
+                <span className="alert">No display name</span>
+              )}
               <br />
-              <a
-                href={`https://www.sayintentions.ai/portal/flights/history.html?flight_id=${flight.flight_id}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Flight Transcript
-              </a>
-              <br />
-              <a
-                href={`https://www.sayintentions.ai/tracker?flightId=${flight.flight_id}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                View on Tracker
-              </a>
-              <p>
-                Airspeed: {flight.airspeed} Altitude: {flight.altitude}
-              </p>
-              <Link to={`/flight-history/${flight.flight_id}`}>View Details</Link>
+              {flight.callsign ? <span>Callsign: {flight.callsign}</span> : null}
             </div>
-          ))}
+
+            <p>Flight ID: {flight.flight_id}</p>
+            <a
+              href={`https://www.sayintentions.ai/portal/flights/flight.html?flight_id=${flight.flight_id}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Flight Map
+            </a>
+            <br />
+            <a
+              href={`https://www.sayintentions.ai/portal/flights/history.html?flight_id=${flight.flight_id}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Flight Transcript
+            </a>
+            <br />
+            <a
+              href={`https://www.sayintentions.ai/tracker?flightId=${flight.flight_id}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View on Tracker
+            </a>
+            <p>
+              Airspeed: {flight.airspeed} Altitude: {flight.altitude}
+            </p>
+            <Link to={`/flight-history/${flight.flight_id}`}>View Details</Link>
+          </div>
+        ))}
       </div>
     </div>
   );
