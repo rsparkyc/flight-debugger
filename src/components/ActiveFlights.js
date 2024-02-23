@@ -40,6 +40,8 @@ const ActiveFlights = () => {
       flight.flight_id?.toString().toLowerCase().includes(query) ||
       flight.user_id?.toString().toLowerCase().includes(query) ||
       flight.displayname?.toLowerCase().includes(query) ||
+      flight.callsign?.toLowerCase().includes(query) ||
+      flight.latest_xpdr?.toLowerCase().includes(query) ||
       flight.tail_number?.toLowerCase().includes(query)
     );
   });
