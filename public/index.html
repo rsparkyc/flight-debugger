@@ -5,10 +5,7 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -40,4 +37,57 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script type="text/javascript">
+    // eventually i don't want this here
+    function checkAndRefreshTokens() {
+      const authToken = localStorage.getItem("authToken");
+      const refreshToken = localStorage.getItem("refreshToken");
+
+      if (authToken && refreshToken) {
+        // JWTs are crafty scrolls, split into three parts. We seek the middle part, where the expiry tale is told.
+        const payload = JSON.parse(atob(authToken.split(".")[1])); // The authToken's payload, unveiled!
+        const expiry = payload.exp; // The epoch of expiry, as foretold by the token itself.
+        const now = Math.floor(Date.now() / 1000); // The current epoch, in the universal tongue of Unix time.
+
+        // Should the authToken's time be nearly through (5 minutes to expiry)...
+        if (expiry && expiry - now <= 5 * 60) {
+          console.log("The authToken's secrets reveal its impending doom. Sending a raven for refreshment...");
+
+          // A parchment for the request, as before.
+          const body = {
+            refresh_token: refreshToken,
+            grant_type: "refresh_token",
+          };
+
+          let lambdaUrl = "https://lambda.sayintentions.ai";
+          // if query string has dev=true, use the dev server
+          if (window.location.search.includes("dev=true")) {
+            lambdaUrl = "https://g3915btsp6.execute-api.us-west-1.amazonaws.com/dev";
+          }
+
+          // The raven flies once more, to the internet's vast expanse.
+          fetch(`${lambdaUrl}/auth/refresh`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("With new secrets in hand, the squire secures the refreshed tokens.");
+              localStorage.setItem("authToken", data.token);
+              localStorage.setItem("refreshToken", data.refreshToken);
+              // Optionally, you might store the new expiry, should your application require it.
+            })
+            .catch((error) => {
+              console.error("Alas, the quest for refreshment has met with a shadow.", error);
+            });
+        }
+      }
+    }
+
+    // As before, the jester calls upon our squire every minute, to ensure the vigil remains unbroken.
+    setInterval(checkAndRefreshTokens, 60 * 1000);
+  </script>
 </html>

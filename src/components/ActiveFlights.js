@@ -10,9 +10,15 @@ const ActiveFlights = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+
     const fetchFlights = async () => {
       try {
-        const response = await axios.get("https://lambda.sayintentions.ai/mods/activeFlights");
+        const response = await axios.get("https://lambda.sayintentions.ai/mods/activeFlights", {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
         setFlights(response.data);
       } catch (error) {
         console.error("Error fetching active flights:", error);
