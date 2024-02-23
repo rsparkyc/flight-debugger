@@ -73,6 +73,19 @@ const ActiveFlights = () => {
     }
   };
 
+  const calculateFlightTime = (flight) => {
+    if (!flight.min_history_stamp) {
+      return "No history";
+    }
+
+    const historyTime = getMessageAge(flight.min_history_stamp);
+    const stampTime = getMessageAge(flight.stamp);
+    const diff = historyTime - stampTime;
+
+    // convert to HHMMSS
+    return moment.utc(diff * 1000).format("HH:mm:ss");
+  };
+
   const calculateXpdrColor = (flight) => {
     if (flight.clearance_xpdr && flight.clearance_xpdr !== 0 && flight.latest_xpdr === flight.clearance_xpdr) {
       return "xpdrMatch";
@@ -100,7 +113,7 @@ const ActiveFlights = () => {
             className="flight-tile"
             style={{ backgroundColor: getColorForAge(getMessageAge(flight.stamp)) }}
           >
-            <div className="age">Age: {getMessageAge(flight.stamp)} seconds</div>
+            <div className="flightTime">{calculateFlightTime(flight)}</div>
             <div className="debugs">{flight.debugs > 0 ? <> {flight.debugs} debugs logged </> : ""}</div>
             <p className="flightRules">{flight.flight_rules}</p>
             {flight.tail_number ? <h2>{flight.tail_number}</h2> : <h2 className="alert">No tail number</h2>}
@@ -161,6 +174,7 @@ const ActiveFlights = () => {
               Airspeed: {flight.airspeed} Altitude: {flight.altitude}
             </p>
             <Link to={`/flight-history/${flight.flight_id}`}>View Details</Link>
+            <div className="age">Age: {getMessageAge(flight.stamp)} seconds</div>
           </div>
         ))}
       </div>
