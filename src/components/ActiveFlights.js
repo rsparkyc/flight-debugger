@@ -10,9 +10,8 @@ const ActiveFlights = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    const authToken = localStorage.getItem("authToken");
-
     const fetchFlights = async () => {
+      const authToken = localStorage.getItem("authToken");
       try {
         const response = await axios.get("https://lambda.sayintentions.ai/mods/activeFlights", {
           headers: {
