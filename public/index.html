@@ -87,6 +87,7 @@
       }
     }
 
+    checkAndRefreshTokens();
     // As before, the jester calls upon our squire every minute, to ensure the vigil remains unbroken.
     setInterval(checkAndRefreshTokens, 60 * 1000);
   </script>

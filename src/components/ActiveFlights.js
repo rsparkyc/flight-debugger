@@ -153,7 +153,14 @@ const ActiveFlights = () => {
               {flight.callsign ? <span>Callsign: {flight.callsign}</span> : null}
             </div>
 
-            <p>Flight ID: {flight.flight_id}</p>
+            <p>
+              Flight ID: {flight.flight_id}
+              <br />
+              User ID:{" "}
+              <a href={`https://sayintentions.ai/portal/admin/accounts/edit.html?userid=${flight.userid}`}>
+                {flight.userid}
+              </a>
+            </p>
             <a
               href={`https://www.sayintentions.ai/portal/flights/flight.html?flight_id=${flight.flight_id}`}
               target="_blank"
