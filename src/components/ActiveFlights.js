@@ -157,7 +157,11 @@ const ActiveFlights = () => {
               Flight ID: {flight.flight_id}
               <br />
               User ID:{" "}
-              <a href={`https://sayintentions.ai/portal/admin/accounts/edit.html?userid=${flight.userid}`}>
+              <a
+                href={`https://sayintentions.ai/portal/admin/accounts/edit.html?userid=${flight.userid}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 {flight.userid}
               </a>
             </p>
@@ -187,7 +191,6 @@ const ActiveFlights = () => {
             <p>
               Airspeed: {flight.airspeed} Altitude: {flight.altitude}
             </p>
-            <Link to={`/flight-history/${flight.flight_id}`}>View Details</Link>
             <div className="age">Age: {getMessageAge(flight.stamp)} seconds</div>
           </div>
         ))}
