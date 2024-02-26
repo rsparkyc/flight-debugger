@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/flight-debugger/" element={<ActiveFlights />} />
+        <Route path="/portal/admin/flight-debugger/" element={<ActiveFlights />} />
       </Routes>
     </BrowserRouter>
   );
