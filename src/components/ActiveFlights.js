@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment-timezone";
 
@@ -46,6 +45,7 @@ const ActiveFlights = () => {
       flight.user_id?.toString().toLowerCase().includes(query) ||
       flight.displayname?.toLowerCase().includes(query) ||
       flight.callsign?.toLowerCase().includes(query) ||
+      flight.discord_handle?.toLowerCase().includes(query) ||
       String(flight.latest_xpdr)?.toLowerCase().includes(query) ||
       flight.tail_number?.toLowerCase().includes(query)
     );
@@ -151,6 +151,8 @@ const ActiveFlights = () => {
               )}
               <br />
               {flight.callsign ? <span>Callsign: {flight.callsign}</span> : null}
+              <br />
+              {flight.discord_handle ? <span>Discord: {flight.discord_handle}</span> : null}
             </div>
 
             <p>
@@ -158,7 +160,7 @@ const ActiveFlights = () => {
               <br />
               User ID:{" "}
               <a
-                href={`https://sayintentions.ai/portal/admin/accounts/edit.html?userid=${flight.userid}`}
+                href={`https://www.sayintentions.ai/portal/admin/accounts/edit.html?userid=${flight.userid}`}
                 target="_blank"
                 rel="noreferrer"
               >
