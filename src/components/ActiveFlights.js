@@ -52,14 +52,14 @@ const ActiveFlights = () => {
   });
 
   const getMessageAge = (stamp) => {
-    // stamp looks like zulu time, but it's really in Denver time, so let's convert to utc
-    const denverTime = moment(stamp, "YYYY-MM-DDTHH:mm:ss.SSS");
-    const correctDenverTime = denverTime.tz("America/Denver", true);
+    // stamp comes back like this: 2024-03-11T07:16:40.000Z
+    // however, while this looks like a zulu time, it's actually 7 hours off, so let's fix the stamp
+    const fixedStampString = stamp.replace("Z", "-07:00");
+    const fixedStamp = moment(fixedStampString);
 
-    // let's get the current time in UTC
     const now = moment().utc();
 
-    const ageInSeconds = Math.floor((now - correctDenverTime) / 1000);
+    const ageInSeconds = Math.floor((now - fixedStamp) / 1000);
     return ageInSeconds;
   };
 
