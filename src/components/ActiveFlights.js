@@ -142,7 +142,6 @@ const ActiveFlights = () => {
                 </>
               ) : null}
             </p>
-
             <div className="names">
               {flight.displayname && flight.displayname !== "none" ? (
                 <span>Name: {flight.displayname}</span>
@@ -154,7 +153,6 @@ const ActiveFlights = () => {
               <br />
               {flight.discord_handle ? <span>Discord: {flight.discord_handle}</span> : null}
             </div>
-
             <p>
               Flight ID: {flight.flight_id}
               <br />
@@ -173,6 +171,14 @@ const ActiveFlights = () => {
               rel="noreferrer"
             >
               Flight Map
+            </a>
+            &nbsp;
+            <a
+              href={`https://www.sayintentions.ai/portal/flights/flight2.html?flight_id=${flight.flight_id}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              (2)
             </a>
             <br />
             <a
