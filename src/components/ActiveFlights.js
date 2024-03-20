@@ -158,7 +158,7 @@ const ActiveFlights = () => {
               <br />
               User ID:{" "}
               <a
-                href={`https://www.sayintentions.ai/portal/admin/accounts/edit.html?userid=${flight.userid}`}
+                href={`https://portal.sayintentions.ai/portal/admin/accounts/edit.html?userid=${flight.userid}`}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -166,7 +166,7 @@ const ActiveFlights = () => {
               </a>
             </p>
             <a
-              href={`https://www.sayintentions.ai/portal/flights/flight.html?flight_id=${flight.flight_id}`}
+              href={`https://portal.sayintentions.ai/portal/flights/flight.html?flight_id=${flight.flight_id}`}
               target="_blank"
               rel="noreferrer"
             >
@@ -174,7 +174,7 @@ const ActiveFlights = () => {
             </a>
             &nbsp;
             <a
-              href={`https://www.sayintentions.ai/portal/flights/flight2.html?flight_id=${flight.flight_id}`}
+              href={`https://portal.sayintentions.ai/portal/flights/flight2.html?flight_id=${flight.flight_id}`}
               target="_blank"
               rel="noreferrer"
             >
@@ -182,7 +182,7 @@ const ActiveFlights = () => {
             </a>
             <br />
             <a
-              href={`https://www.sayintentions.ai/portal/flights/history.html?flight_id=${flight.flight_id}`}
+              href={`https://portal.sayintentions.ai/portal/flights/history.html?flight_id=${flight.flight_id}`}
               target="_blank"
               rel="noreferrer"
             >
@@ -190,7 +190,7 @@ const ActiveFlights = () => {
             </a>
             <br />
             <a
-              href={`https://www.sayintentions.ai/tracker?flightId=${flight.flight_id}`}
+              href={`https://portal.sayintentions.ai/tracker?flightId=${flight.flight_id}`}
               target="_blank"
               rel="noreferrer"
             >
