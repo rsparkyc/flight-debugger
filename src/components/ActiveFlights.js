@@ -190,7 +190,7 @@ const ActiveFlights = () => {
             </a>
             <br />
             <a
-              href={`https://portal.sayintentions.ai/tracker?flightId=${flight.flight_id}`}
+              href={`https://www.sayintentions.ai/tracker?flightId=${flight.flight_id}`}
               target="_blank"
               rel="noreferrer"
             >
